@@ -2,15 +2,7 @@
 
 데이터 로직 연습용 프로젝트
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 제작 중
+현재 세부 화면(세로 제작 완료)
+사진 들어갈 자리 세로 화면 Screenshot_20250110_141559
+가로 제작 중

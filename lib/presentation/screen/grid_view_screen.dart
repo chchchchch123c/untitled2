@@ -12,7 +12,7 @@ class GridViewScreen extends StatefulWidget {
   State<GridViewScreen> createState() => _GridViewScreenState();
 }
 
-class _GridViewScreenState extends State<GridViewScreen> {
+class _GridViewScreenState extends State<GridViewScreen> with AutomaticKeepAliveClientMixin {
   void update() {
     setState(() {});
   }
@@ -29,6 +29,7 @@ class _GridViewScreenState extends State<GridViewScreen> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return SafeArea(
       child: Scaffold(
         backgroundColor: backgroundColor,
@@ -107,4 +108,7 @@ class _GridViewScreenState extends State<GridViewScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

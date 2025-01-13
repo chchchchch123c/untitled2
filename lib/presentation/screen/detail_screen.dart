@@ -29,7 +29,7 @@ class DetailScreen extends StatefulWidget {
   State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClientMixin {
   void updateScreen() {
     setState(() {});
   }
@@ -41,21 +41,17 @@ class _DetailScreenState extends State<DetailScreen> {
       movieProvider.addListener(updateScreen);
       movieProvider.getMovieList();
     });
-    final genreText = widget.genreIds.fold(
-      '',
-          (previousValue, element) {
-        final genre = widget.showGenreList.firstWhere(
-              (element2) => element == element2.id,
-        );
-        return previousValue.isEmpty
-            ? genre.name
-            : "$previousValue & ${genre.name}";
-      },
-    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    movieProvider.removeListener(updateScreen);
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final genreText = widget.genreIds.fold(
       '',
           (previousValue, element) {
@@ -69,15 +65,30 @@ class _DetailScreenState extends State<DetailScreen> {
     );
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: const Color(0xFF111111),
         body: SingleChildScrollView(
           child: Column(
             children: [
               Stack(
                 children: [
-                  Image.network(
-                    'https://image.tmdb.org/t/p/original/${widget.img}',
-                    fit: BoxFit.cover,
+                  ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    child: Image.network(
+                      'https://image.tmdb.org/t/p/original/${widget.img}',
+                      fit: BoxFit.cover,
+                      width: MediaQuery.sizeOf(context).width,
+                      height: 220,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child;
+                        }
+                        return Container(
+                          color: Color(0xFF292929),
+                          width: MediaQuery.sizeOf(context).width,
+                          height: 220,
+                        );
+                      },
+                    ),
                   ),
                   Container(
                     width: MediaQuery
@@ -89,17 +100,13 @@ class _DetailScreenState extends State<DetailScreen> {
                             end: Alignment.bottomCenter,
                             colors: [
                               Colors.black.withOpacity(0),
-                              Colors.black,
-                              Colors.black,
+                              const Color(0xFF111111),
+                              const Color(0xFF111111),
                             ])),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.network(
-                          'https://image.tmdb.org/t/p/original/${widget.img}',
-                          color: Colors.transparent,
-                          fit: BoxFit.cover,
-                        ),
+                        SizedBox(height: 220,),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 15),
@@ -195,4 +202,7 @@ class _DetailScreenState extends State<DetailScreen> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

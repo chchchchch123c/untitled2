@@ -12,7 +12,8 @@ class GridViewScreen extends StatefulWidget {
   State<GridViewScreen> createState() => _GridViewScreenState();
 }
 
-class _GridViewScreenState extends State<GridViewScreen> with AutomaticKeepAliveClientMixin {
+class _GridViewScreenState extends State<GridViewScreen>
+    with AutomaticKeepAliveClientMixin {
   void update() {
     setState(() {});
   }
@@ -32,9 +33,9 @@ class _GridViewScreenState extends State<GridViewScreen> with AutomaticKeepAlive
     super.build(context);
     return SafeArea(
       child: Scaffold(
-        backgroundColor: backgroundColor,
+        backgroundColor: const Color(0xFF111111),
         appBar: AppBar(
-          backgroundColor: dialogColor,
+          backgroundColor: Color(0xFF292929),
           actions: [
             Expanded(
               child: ListView.builder(
@@ -47,7 +48,8 @@ class _GridViewScreenState extends State<GridViewScreen> with AutomaticKeepAlive
                     child: Center(
                       child: Text(
                         currentItem.name,
-                        style: const TextStyle(color: Colors.white, fontSize: 18),
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 18),
                       ),
                     ),
                   );
@@ -78,17 +80,30 @@ class _GridViewScreenState extends State<GridViewScreen> with AutomaticKeepAlive
                               overView: currentItem.overview,
                               date: currentItem.release_date,
                               vote: currentItem.vote_average,
-                              genreIds:
-                              movieProvider.movieList.first.genre_ids,
+                              genreIds: movieProvider.movieList.first.genre_ids,
                               showGenreList: movieProvider.genreList,
                             );
                           }));
                         },
-                        child: Image.network(
-                          'https://image.tmdb.org/t/p/original/${currentItem.poster_path}',
-                          fit: BoxFit.cover,
-                          height: 272,
-                          width: 187,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          child: Image.network(
+                            'https://image.tmdb.org/t/p/original/${currentItem.poster_path}',
+                            fit: BoxFit.cover,
+                            height: 272,
+                            width: 187,
+                            loadingBuilder: (context, child, loadingProgress) {
+                              // 로딩 빌더, 이미지 불러올 때 처리
+                              if (loadingProgress == null) {
+                                return child; // 로딩 다 되면 표시
+                              }
+                              return Container(
+                                height: 272,
+                                width: 187,
+                                color: Color(0xFF414141),
+                              );
+                            },
+                          ),
                         ),
                       )
                     ],
@@ -104,7 +119,8 @@ class _GridViewScreenState extends State<GridViewScreen> with AutomaticKeepAlive
             ],
           ),
         ),
-        bottomNavigationBar: movieProvider.movieList.length < 5 ? MoviePage() : null,
+        bottomNavigationBar:
+            movieProvider.movieList.length < 5 ? MoviePage() : null,
       ),
     );
   }

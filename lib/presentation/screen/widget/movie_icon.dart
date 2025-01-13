@@ -12,10 +12,10 @@ class MovieIcon extends StatelessWidget {
       width: 30,
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
-        color: Color(0xFF777777)
+        color: Color(0xFF414141)
       ),
       child: Center(
-          child: Icon(icon.icon, color: Colors.white, size: 24,)
+          child: Icon(icon.icon, color: Colors.white, size: 23,)
       ),
     );
   }

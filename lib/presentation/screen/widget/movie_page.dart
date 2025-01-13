@@ -15,7 +15,7 @@ class _MoviePageState extends State<MoviePage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: backgroundColor,
+      color: const Color(0xFF111111),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

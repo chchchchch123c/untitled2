@@ -82,6 +82,7 @@ class _GridViewScreenState extends State<GridViewScreen>
                               vote: currentItem.vote_average,
                               genreIds: movieProvider.movieList.first.genre_ids,
                               showGenreList: movieProvider.genreList,
+                              id: currentItem.id,
                             );
                           }));
                         },

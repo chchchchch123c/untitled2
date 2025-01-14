@@ -3,11 +3,11 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:untitled2/data/models/movie_info_model.dart';
 
 import '../../common/string.dart';
 import '../../data/models/genre_model.dart';
 import '../../data/models/movie_model.dart';
-
 
 final movieProvider = MovieProvider();
 
@@ -17,6 +17,8 @@ class MovieProvider extends ChangeNotifier {
 
   int currentPage = 1;
   int totalPages = 1;
+
+  MovieInfoModel? movieInfoModel;
 
   Future<void> getGenreList() async {
     try {
@@ -33,15 +35,16 @@ class MovieProvider extends ChangeNotifier {
         genreList.add(GenreModel.fromJson(json: genre));
       }
       notifyListeners();
-    } catch (e) {
-      log('wtf');
+    } catch (e, t) {
+      log('getGenreList', error: e, stackTrace: t);
     }
   }
 
   Future<void> getMovieList({int page = 1}) async {
     try {
       movieList.clear();
-      final response = await Client().get(Uri.parse('$base_url/movie/now_playing?page=$page'),
+      final response = await Client().get(
+          Uri.parse('$base_url/movie/now_playing?page=$page'),
           headers: {'Authorization': 'Bearer $api_key'});
 
       final json = jsonDecode(response.body);
@@ -54,8 +57,36 @@ class MovieProvider extends ChangeNotifier {
         movieList.add(MovieModel.fromJson(json: movie));
       }
       notifyListeners();
-    } catch (e) {
-      log('wtf');
+    } catch (e, t) {
+      log('getMovieList', error: e, stackTrace: t);
+    }
+  }
+
+  Future<void> getMovieInfoList(int id) async {
+    try {
+      final response = await Client().get(Uri.parse('$base_url/movie/$id'),
+          headers: {'Authorization': 'Bearer $api_key'});
+      final json = jsonDecode(response.body);
+
+      movieInfoModel = MovieInfoModel.fromJson(json);
+      notifyListeners();
+    } catch (e, t) {
+      log('getMovieInfoList', error: e, stackTrace: t);
+    }
+  }
+
+  Future<void> fetchMovieDetail(int id) async {
+    try {
+      final response = await Client().get(
+        Uri.parse('$base_url/movie/$id'),
+        headers: {'Authorization': 'Bearer $api_key'},
+      );
+
+      final json = jsonDecode(response.body);
+      movieInfoModel = MovieInfoModel.fromJson(json);
+      notifyListeners();
+    } catch (e, t) {
+      log('fetchMovieDetail', error: e, stackTrace: t);
     }
   }
 

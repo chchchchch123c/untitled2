@@ -13,7 +13,9 @@ class DetailScreen extends StatefulWidget {
     required this.date,
     required this.vote,
     required this.genreIds,
-    required this.showGenreList});
+    required this.showGenreList,
+    required this.id,
+  });
 
   final String img;
   final String title;
@@ -25,11 +27,14 @@ class DetailScreen extends StatefulWidget {
   final List<int> genreIds;
   final List<GenreModel> showGenreList;
 
+  final int id;
+
   @override
   State<DetailScreen> createState() => _DetailScreenState();
 }
 
 class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClientMixin {
+
   void updateScreen() {
     setState(() {});
   }
@@ -37,9 +42,10 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       movieProvider.addListener(updateScreen);
       movieProvider.getMovieList();
+      await movieProvider.getMovieInfoList(widget.id);
     });
   }
 
@@ -63,6 +69,7 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
             : "$previousValue & ${genre.name}";
       },
     );
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xFF111111),
@@ -177,6 +184,15 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                   style: TextStyle(color: Colors.white),
                 ),
               ),
+              Text(movieProvider.movieInfoModel!.runtime.toString(), style: TextStyle(color: Colors.white),),
+              Text(movieProvider.movieInfoModel!.homepage, style: TextStyle(color: Colors.white),),
+              ...movieProvider.movieInfoModel!.production_companies.map((company) {
+                return Row(
+                  children: [
+                    Image.network('https://image.tmdb.org/t/p/original/${company.logo_path}', width: 100, height: 100,)
+                  ],
+                );
+              },),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: SizedBox(

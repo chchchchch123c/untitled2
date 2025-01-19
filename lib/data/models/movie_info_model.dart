@@ -22,7 +22,7 @@ class MovieInfoModel {
 class ProductionCompaniesModel {
 
   final int id;
-  final String logo_path;
+  final String? logo_path;
   final String name;
   final String origin_country;
 

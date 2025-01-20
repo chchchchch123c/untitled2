@@ -101,7 +101,7 @@ class _GridViewScreenState extends State<GridViewScreen>
                               return Container(
                                 height: 272,
                                 width: 187,
-                                color: Color(0xFF414141),
+                                color: const Color(0xFF414141),
                               );
                             },
                           ),

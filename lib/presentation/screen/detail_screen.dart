@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:untitled2/presentation/provider/movie_provider.dart';
 import 'package:untitled2/presentation/screen/widget/movie_circular_progress_bar.dart';
+import 'package:untitled2/presentation/screen/widget/movie_home_page.dart';
 import 'package:untitled2/presentation/screen/widget/movie_icon.dart';
+import 'package:untitled2/presentation/screen/widget/movie_runtime.dart';
 
 import '../../data/models/genre_model.dart';
 
@@ -42,10 +46,10 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       movieProvider.addListener(updateScreen);
       movieProvider.getMovieList();
-      await movieProvider.getMovieInfoList(widget.id);
+      movieProvider.getMovieInfoList(widget.id);
     });
   }
 
@@ -62,7 +66,7 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
       '',
           (previousValue, element) {
         final genre = widget.showGenreList.firstWhere(
-              (element2) => element == element2.id,
+              (element2) => element == element2.id
         );
         return previousValue.isEmpty
             ? genre.name
@@ -161,13 +165,32 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                                 ),
                               ),
                               Spacer(),
-                              MovieIcon(icon: Icon(Icons.list)),
-                              Padding(
-                                padding:
-                                const EdgeInsets.symmetric(horizontal: 16),
-                                child: MovieIcon(icon: Icon(Icons.favorite)),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 5),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.access_time, color: Colors.white, size: 16,),
+
+                                        MovieRuntime(durationInMinutes: movieProvider.movieInfoModel?.runtime ?? 0.toInt(),),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    children: [
+                                      MovieIcon(icon: Icon(Icons.list)),
+                                      Padding(
+                                        padding:
+                                        const EdgeInsets.symmetric(horizontal: 16),
+                                        child: MovieIcon(icon: Icon(Icons.favorite)),
+                                      ),
+                                      MovieIcon(icon: Icon(Icons.bookmark)),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              MovieIcon(icon: Icon(Icons.bookmark)),
                             ],
                           ),
                         ),
@@ -178,21 +201,63 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
+                padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
                 child: Text(
                   widget.overView,
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-              Text(movieProvider.movieInfoModel!.runtime.toString(), style: TextStyle(color: Colors.white),),
-              Text(movieProvider.movieInfoModel!.homepage, style: TextStyle(color: Colors.white),),
-              ...movieProvider.movieInfoModel!.production_companies.map((company) {
-                return Row(
-                  children: [
-                    Image.network('https://image.tmdb.org/t/p/original/${company.logo_path}', width: 100, height: 100,)
-                  ],
-                );
-              },),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: Divider(),
+              ),
+              // Text(movieProvider.movieInfoModel!.homepage, style: TextStyle(color: Colors.white),),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                child: Container(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: const Text('Content distributor', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: SizedBox(
+                  height: movieProvider.movieInfoModel?.production_companies.length == 1 ? 60 : 120,
+                  child: GridView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: movieProvider.movieInfoModel?.production_companies.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: movieProvider.movieInfoModel?.production_companies.length == 1 ? 1 : 2,
+                      mainAxisSpacing: 10,
+                      crossAxisSpacing: 5,
+                      mainAxisExtent: 60,
+                    ),
+                    itemBuilder: (context, index) {
+                      final company = movieProvider.movieInfoModel?.production_companies[index];
+                      if (company?.logo_path == null) {
+                        return const SizedBox.shrink();
+                      }
+                      return Stack(
+                        children: [
+                          Container(
+                            width: 60,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(Radius.circular(2))
+                            ),
+                          ),
+                          Image.network('https://image.tmdb.org/t/p/original/${company?.logo_path}',
+                            width: 60,
+                            height: 50,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+              MovieHomePage(homepageUrl: movieProvider.movieInfoModel?.homepage,),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: SizedBox(

@@ -10,6 +10,6 @@ class MovieRuntime extends StatelessWidget {
   Widget build(BuildContext context) {
     final int hours = durationInMinutes ~/ 60;
     final int minutes = durationInMinutes % 60;
-    return Text(' ${hours}h ${minutes}m', style: TextStyle(color: Colors.white, fontSize: 14),);
+    return Text(' ${hours}h ${minutes}m', style: const TextStyle(color: Colors.white, fontSize: 14),);
   }
 }

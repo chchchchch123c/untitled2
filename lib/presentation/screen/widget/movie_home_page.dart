@@ -21,7 +21,7 @@ class _MovieHomePageState extends State<MovieHomePage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.getLaunchUrl,
-      child: Icon(
+      child: const Icon(
         Icons.language,
         color: Colors.white,
         size: 30,

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:untitled2/presentation/provider/movie_provider.dart';
@@ -83,7 +82,7 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
               Stack(
                 children: [
                   ClipRRect(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5)),
                     child: Image.network(
                       'https://image.tmdb.org/t/p/original/${widget.img}',
                       fit: BoxFit.cover,
@@ -94,7 +93,7 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                           return child;
                         }
                         return Container(
-                          color: Color(0xFF292929),
+                          color: const Color(0xFF292929),
                           width: MediaQuery.sizeOf(context).width,
                           height: 220,
                         );
@@ -110,14 +109,14 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                             colors: [
-                              Colors.black.withOpacity(0),
+                              Colors.black.withAlpha(0),
                               const Color(0xFF111111),
                               const Color(0xFF111111),
                             ])),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(height: 220,),
+                        const SizedBox(height: 220,),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 10, vertical: 15),
@@ -126,7 +125,7 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                                 children: [
                                   TextSpan(
                                     text: widget.title,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 40,
                                       fontWeight: FontWeight.bold,
@@ -135,7 +134,7 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                                   TextSpan(
                                     text: ' (${widget.date.substring(0, 4)})',
                                     style:
-                                    TextStyle(color: Colors.grey, fontSize: 40),
+                                    const TextStyle(color: Colors.grey, fontSize: 40),
                                   )
                                 ]
                             ),
@@ -145,7 +144,7 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text(
                             genreText,
-                            style: TextStyle(color: Colors.white),
+                            style: const TextStyle(color: Colors.white),
                           ),
                         ),
                         Padding(
@@ -154,9 +153,9 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                           child: Row(
                             children: [
                               MovieCircularProgressBar(value: widget.vote),
-                              Padding(
+                              const Padding(
                                 padding:
-                                const EdgeInsets.symmetric(horizontal: 10),
+                                EdgeInsets.symmetric(horizontal: 10),
                                 child: Text(
                                   'user\nscore',
                                   textAlign: TextAlign.center,
@@ -164,7 +163,7 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                                       color: Colors.white, fontSize: 18),
                                 ),
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -172,18 +171,17 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                                     padding: const EdgeInsets.only(bottom: 5),
                                     child: Row(
                                       children: [
-                                        Icon(Icons.access_time, color: Colors.white, size: 16,),
-
+                                        const Icon(Icons.access_time, color: Colors.white, size: 16,),
                                         MovieRuntime(durationInMinutes: movieProvider.movieInfoModel?.runtime ?? 0.toInt(),),
                                       ],
                                     ),
                                   ),
-                                  Row(
+                                  const Row(
                                     children: [
                                       MovieIcon(icon: Icon(Icons.list)),
                                       Padding(
                                         padding:
-                                        const EdgeInsets.symmetric(horizontal: 16),
+                                        EdgeInsets.symmetric(horizontal: 16),
                                         child: MovieIcon(icon: Icon(Icons.favorite)),
                                       ),
                                       MovieIcon(icon: Icon(Icons.bookmark)),
@@ -204,14 +202,13 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                 padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
                 child: Text(
                   widget.overView,
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                 ),
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15),
                 child: Divider(),
               ),
-              // Text(movieProvider.movieInfoModel!.homepage, style: TextStyle(color: Colors.white),),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                 child: Container(
@@ -242,7 +239,7 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                           Container(
                             width: 60,
                             height: 50,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.all(Radius.circular(2))
                             ),

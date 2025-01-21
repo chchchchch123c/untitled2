@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../../common/color.dart';
 import '../../provider/movie_provider.dart';
 
 class MoviePage extends StatefulWidget {

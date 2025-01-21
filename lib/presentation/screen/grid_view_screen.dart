@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:untitled2/common/color.dart';
 import 'package:untitled2/presentation/screen/detail_screen.dart';
 import 'package:untitled2/presentation/screen/widget/movie_page.dart';
 
@@ -35,7 +34,7 @@ class _GridViewScreenState extends State<GridViewScreen>
       child: Scaffold(
         backgroundColor: const Color(0xFF111111),
         appBar: AppBar(
-          backgroundColor: Color(0xFF292929),
+          backgroundColor: const Color(0xFF292929),
           actions: [
             Expanded(
               child: ListView.builder(
@@ -87,7 +86,7 @@ class _GridViewScreenState extends State<GridViewScreen>
                           }));
                         },
                         child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                          borderRadius: const BorderRadius.all(Radius.circular(5)),
                           child: Image.network(
                             'https://image.tmdb.org/t/p/original/${currentItem.poster_path}',
                             fit: BoxFit.cover,
@@ -116,12 +115,12 @@ class _GridViewScreenState extends State<GridViewScreen>
                   mainAxisSpacing: 10,
                 ),
               ),
-              if (movieProvider.movieList.length >= 5) MoviePage(),
+              if (movieProvider.movieList.length >= 5) const MoviePage(),
             ],
           ),
         ),
         bottomNavigationBar:
-            movieProvider.movieList.length < 5 ? MoviePage() : null,
+            movieProvider.movieList.length < 5 ? const MoviePage() : null,
       ),
     );
   }

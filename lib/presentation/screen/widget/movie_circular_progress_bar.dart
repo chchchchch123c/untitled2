@@ -64,7 +64,7 @@ class _CircularProgressPainter extends CustomPainter {
 
     // 진행 바를 그리기 위한 Paint 객체 생성
     Paint progressPaint = Paint()
-      ..color = Color(0xFF21D07A)
+      ..color = const Color(0xFF21D07A)
       ..style = PaintingStyle.stroke // 진행 바를 선으로만 그리도록 설정
       ..strokeCap = StrokeCap.round // 진행 바의 끝을 둥글게 설정
       ..strokeWidth = strokeWidth; // 진행 바의 선 두께 설정

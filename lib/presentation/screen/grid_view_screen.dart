@@ -74,7 +74,7 @@ class _GridViewScreenState extends State<GridViewScreen>
                           Navigator.of(context)
                               .push(MaterialPageRoute(builder: (context) {
                             return DetailScreen(
-                              img: currentItem.backdrop_path,
+                              img: currentItem.backdrop_path!,
                               title: currentItem.title,
                               overView: currentItem.overview,
                               date: currentItem.release_date,
@@ -88,7 +88,8 @@ class _GridViewScreenState extends State<GridViewScreen>
                         child: ClipRRect(
                           borderRadius: const BorderRadius.all(Radius.circular(5)),
                           child: Image.network(
-                            'https://image.tmdb.org/t/p/original/${currentItem.poster_path}',
+                            currentItem.poster_path!.isNotEmpty ?
+                            'https://image.tmdb.org/t/p/original/${currentItem.poster_path}' : '',
                             fit: BoxFit.cover,
                             height: 272,
                             width: 187,
@@ -115,12 +116,12 @@ class _GridViewScreenState extends State<GridViewScreen>
                   mainAxisSpacing: 10,
                 ),
               ),
-              if (movieProvider.movieList.length >= 5) const MoviePage(),
+              if (movieProvider.movieList.length >= 5) MoviePage(),
             ],
           ),
         ),
         bottomNavigationBar:
-            movieProvider.movieList.length < 5 ? const MoviePage() : null,
+            movieProvider.movieList.length < 5 ? MoviePage() : null,
       ),
     );
   }

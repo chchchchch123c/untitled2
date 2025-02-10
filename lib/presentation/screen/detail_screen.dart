@@ -198,6 +198,7 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                   // TODO close 버튼 넣을 자리
                 ],
               ),
+              MovieHomePage(homepageUrl: movieProvider.movieInfoModel?.homepage),
               Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
                 child: Text(
@@ -254,7 +255,6 @@ class _DetailScreenState extends State<DetailScreen> with AutomaticKeepAliveClie
                   ),
                 ),
               ),
-              MovieHomePage(homepageUrl: movieProvider.movieInfoModel?.homepage,),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20),
                 child: SizedBox(

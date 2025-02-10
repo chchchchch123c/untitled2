@@ -21,10 +21,20 @@ class _MovieHomePageState extends State<MovieHomePage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: widget.getLaunchUrl,
-      child: const Icon(
-        Icons.language,
-        color: Colors.white,
-        size: 30,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Container(
+          width: MediaQuery.sizeOf(context).width,
+          decoration: const BoxDecoration(
+              color: Color(0xFF414141),
+              borderRadius: BorderRadius.all(Radius.circular(4))
+          ),
+          child: const Icon(
+            Icons.play_arrow_rounded,
+            color: Colors.white,
+            size: 50,
+          ),
+        ),
       ),
     );
   }

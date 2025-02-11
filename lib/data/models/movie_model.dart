@@ -1,13 +1,13 @@
 class MovieModel {
   final bool adult;
-  final String backdrop_path;
+  final String? backdrop_path;
   final List<int> genre_ids;
   final int id;
   final String original_language;
   final String original_title;
   final String overview;
   final double popularity;
-  final String poster_path;
+  final String? poster_path;
   final String release_date;
   final String title;
   final bool video;

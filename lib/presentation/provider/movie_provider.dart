@@ -75,21 +75,6 @@ class MovieProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchMovieDetail(int id) async {
-    try {
-      final response = await Client().get(
-        Uri.parse('$base_url/movie/$id'),
-        headers: {'Authorization': 'Bearer $api_key'},
-      );
-
-      final json = jsonDecode(response.body);
-      movieInfoModel = MovieInfoModel.fromJson(json);
-      notifyListeners();
-    } catch (e, t) {
-      log('fetchMovieDetail', error: e, stackTrace: t);
-    }
-  }
-
   void changePage(int newPage) async {
     if (newPage == currentPage) return;
     await getMovieList(page: newPage);
